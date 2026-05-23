@@ -1,62 +1,64 @@
+-- Create Student Table
 CREATE TABLE students (
     student_id INT PRIMARY KEY,
-    name VARCHAR(100),
-    city VARCHAR(100),
-    marks INT
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    age INT,
+    grade VARCHAR(5),
+    course VARCHAR(100),
+    email VARCHAR(100),
+    dob DATE,
+    blood_group VARCHAR(5),
+    country VARCHAR(50)
 );
 
-CREATE TABLE courses (
-    course_id INT PRIMARY KEY,
-    course_name VARCHAR(100),
-    student_id INT,
-    FOREIGN KEY (student_id) REFERENCES students(student_id)
-);
+-- Insert Values
+INSERT INTO students (
+    student_id,
+    first_name,
+    last_name,
+    age,
+    grade,
+    course,
+    email,
+    dob,
+    blood_group,
+    country
+)
+VALUES
+(1, 'John', 'Doe', 20, 'A+', 'Computer Science', 'john.doe@example.com', '2004-05-10', 'O+', 'USA'),
+
+(2, 'Alice', 'Smith', 22, 'B', 'Mathematics', 'alice.smith@example.com', '2002-08-15', 'A-', 'UK'),
+
+(3, 'Bob', 'Johnson', 21, 'A', 'Physics', 'bob.johnson@example.com', '2003-02-20', 'B+', 'Canada'),
+
+(4, 'Emma', 'Brown', 23, 'C', 'Biology', 'emma.brown@example.com', '2001-11-30', 'AB-', 'Australia'),
+
+(5, 'Liam', 'Williams', 19, 'A-', 'Chemistry', 'liam.williams@example.com', '2005-04-22', 'O-', 'Germany'),
+
+(6, 'Mia', 'Taylor', 20, 'A+', 'Computer Science', 'mia.taylor@example.com', '2004-06-15', 'B+', 'USA'),
+
+(7, 'Noah', 'Lee', 22, 'B+', 'Physics', 'noah.lee@example.com', '2002-09-10', 'AB+', 'Canada'),
+
+(8, 'Olivia', 'Harris', 21, 'A', 'Chemistry', 'olivia.harris@example.com', '2003-07-25', 'O+', 'Australia');
 
 
-INSERT INTO students VALUES
-(1, 'Nafis', 'Dhaka', 85),
-(2, 'Rakesh', 'Chittagong', 72),
-(3, 'Alice', 'Khulna', 90),
-(4, 'Bob', 'Sylhet', 65),
-(5, 'Eve', 'Dhaka', 95),
-(6, 'John', 'Rajshahi', 78),
-(7, 'Mina', 'Barisal', 88),
-(8, 'Rahim', 'Khulna', 60),
-(9, 'Sadia', 'Dhaka', 92),
-(10, 'Karim', 'Sylhet', 70);
+SELECT * from students where country IN('USA', 'Australia')
 
+SELECT * FROM students WHERE country = 'USA' AND grade = 'A+'
 
-INSERT INTO courses VALUES
-(1, 'Database', 1),
-(2, 'Networking', 2),
-(3, 'Web Development', 1),
-(4, 'AI Basics', 3),
-(5, 'Machine Learning', 5),
-(6, 'Data Structures', 6),
-(7, 'Algorithms', 6),
-(8, 'Operating Systems', 7),
-(9, 'Computer Networks', 8),
-(10, 'Software Engineering', 9),
-(11, 'Cyber Security', 10),
-(12, 'Cloud Computing', 3),
-(13, 'Python Programming', 5);
+SELECT * from students WHERE age != 20 AND country = 'Canada'
 
+SELECT country,count(*) FROM students GROUP BY country
 
-SELECT name from students where marks < (SELECT marks FROM students where name = 'Alice')
+SELECT * FROM students where grade IN('B','B+') AND country IN('Canada','UK')
 
-SELECT * from students as s INNER JOIN courses as c on s.student_id = c.student_id WHERE s.city = 'Dhaka'
+SELECT * from students where age > 20 AND grade IN('C','A-')
 
-SELECT MAX(marks) AS second_highest
-FROM students
-WHERE marks < (
-    SELECT MAX(marks)
-    FROM students
-);
+SELECT * from students WHERE email ILIKE '%example.com'
 
-SELECT *
-FROM students
-WHERE marks > (
-    SELECT MAX(marks)
-    FROM students
-    WHERE city = 'Dhaka'
-);
+SELECT * from students WHERE country IN('USA','Canada') ORDER BY age DESC
+
+SELECT concat(first_name, ' ', last_name) from students
+
+SELECT * from students where age NOT IN(20,21,22)
