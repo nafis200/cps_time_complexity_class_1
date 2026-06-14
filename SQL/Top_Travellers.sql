@@ -11,6 +11,10 @@ CREATE TABLE Rides (
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
+drop table Rides
+
+drop table users
+
 INSERT INTO Users (id, name) VALUES
 (1, 'Alice'),
 (2, 'Bob'),
